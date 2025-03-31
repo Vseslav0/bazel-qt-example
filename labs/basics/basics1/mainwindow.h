@@ -1,44 +1,44 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QSpinBox>
-#include <QVBoxLayout>
-#include <QListWidget>
-#include <QGroupBox>
-#include <QLabel>
 #include <QComboBox>
 #include <QDialog>
-#include <QPushButton>
-#include <cstdlib>
-#include <vector>
-#include <QList>
-#include <QProgressBar>
+#include <QGroupBox>
+#include <QLabel>
 #include <QLineEdit>
+#include <QList>
+#include <QListWidget>
+#include <QMainWindow>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QVBoxLayout>
+#include <cstdlib>
+#include <stack>
+#include <vector>
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
+// QT_BEGIN_NAMESPACE
+// namespace Ui {
+// class MainWindow;
+// }
+// QT_END_NAMESPACE
 class ListWidget;
 class Ticket;
 class ProgressBarGreen;
 class ProgressBar;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
+   public:
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-private slots:
+   private slots:
     void AddElement();
 
-public:
-    Ui::MainWindow *ui;
+   public:
+    // Ui::MainWindow *ui;
     QSpinBox* spinbox;
     ListWidget* listwidget;
     QPushButton* next_question;
@@ -46,42 +46,46 @@ public:
     ProgressBarGreen* green_progress_bar;
     ProgressBar* progress_bar;
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
 
 class ProgressBarGreen : public QProgressBar {
     Q_OBJECT
-public:
+   public:
     ProgressBarGreen(MainWindow* parent_);
-public slots:
+   public slots:
     void ValueChange();
-private:
+
+   private:
     MainWindow* parent;
 };
 
 class ProgressBar : public QProgressBar {
     Q_OBJECT
-public:
+   public:
     ProgressBar(MainWindow* parent_);
-public slots:
+   public slots:
     void ValueChange();
-private:
+
+   private:
     MainWindow* parent;
 };
 
 class QuestionView;
 
 class Ticket {
-public:
+   public:
     Ticket(QString title, int number);
-public:
+
+   public:
     QuestionView* question_view;
 };
 
 class QuestionView : public QGroupBox {
     Q_OBJECT
-public:
+   public:
     QuestionView(QString title, QString number);
-public:
+
+   public:
     QWidget* parent;
     QLabel* name;
     QLabel* number;
@@ -93,10 +97,10 @@ public:
 
 class ListWidget : public QListWidget {
     Q_OBJECT
-public:
+   public:
     ListWidget(MainWindow* parent_);
     ~ListWidget() = default;
-public slots:
+   public slots:
     void AddElement(int val);
     void ElementClicked();
     void CurrentElementChanged();
@@ -105,7 +109,8 @@ public slots:
     void NextQuestion();
     void PrevQuestion();
     void NameChanged();
-public:
+
+   public:
     MainWindow* parent;
     int i = 1;
     int green = 0;
@@ -116,5 +121,5 @@ public:
     std::vector<Ticket*> tickets;
     std::vector<QBoxLayout*> rows;
     QBoxLayout* current_row;
+    std::stack<int> history;
 };
-
